@@ -5,18 +5,17 @@ import { ListUserContactsService } from '../../../services/ListUserContactsServi
 
 export class ListUsersController {
   public async index(request: Request, response: Response) {
+    const queryParams = request.query as any;
     const listUsersService = new ListUsersService();
     const listUserAddressesService = new ListUserAddressesService();
     const listUserContactsService = new ListUserContactsService();
 
-    const usersList = await listUsersService.execute();
+    const usersList = await listUsersService.execute(queryParams);
 
     for (let user of usersList) {
-      // console.log(user);
       let userAddresses = await listUserAddressesService.execute(user.id);
       let userContacts = await listUserContactsService.execute(user.id);
-      // console.log(userAddresses);
-      // console.log(userContacts);
+
       user.addresses = userAddresses;
       user.contacts = userContacts;
     }
