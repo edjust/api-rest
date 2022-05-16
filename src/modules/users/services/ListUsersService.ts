@@ -3,7 +3,18 @@ import { Addresses } from './ListUserAddressesService';
 import { Contacts } from './ListUserContactsService';
 
 interface Request {
-  id: number;
+  id: string;
+  createdAt: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+interface Users {
+  id: string;
+  createdAt: string;
+  fullName: string;
+  email: string;
   contacts: Contacts[];
   addresses: Addresses[];
 }
@@ -16,7 +27,7 @@ interface QueryParams {
 }
 
 export class ListUsersService {
-  public async execute(queryParams: QueryParams): Promise<Request[]> {
+  public async execute(queryParams: QueryParams): Promise<Users[]> {
     let apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users`;
 
     let queryParamsLength = Object.keys(queryParams).length;
@@ -38,7 +49,20 @@ export class ListUsersService {
     }
 
     const { data } = await axios.get(apiURL);
-    const usersList = data;
+    let usersList: Users[] = [];
+
+    data.map((addresses: Request) => {
+      let { id, createdAt, firstName, lastName, email } = addresses;
+
+      usersList.push({
+        id,
+        createdAt,
+        fullName: firstName + ' ' + lastName,
+        email,
+        addresses: [],
+        contacts: [],
+      });
+    });
 
     return usersList;
   }

@@ -8,7 +8,7 @@ export interface Contacts {
 }
 
 export class ListUserContactsService {
-  public async execute(userId: number): Promise<Contacts[]> {
+  public async execute(userId: string): Promise<Contacts[]> {
     const apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users/${userId}/contacts`;
 
     const { data } = await axios.get(apiURL);
