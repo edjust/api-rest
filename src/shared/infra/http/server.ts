@@ -6,10 +6,6 @@ const app = express();
 
 app.use(routes);
 
-app.get('/', (request, response) => {
-  return response.json({ message: 'Hello World!' });
-});
-
 const portConnection = 4000;
 
 app.listen(portConnection, () => {
