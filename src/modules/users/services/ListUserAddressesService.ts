@@ -1,4 +1,5 @@
 import axios from 'axios';
+import NodeCache from 'node-cache';
 
 export interface Request {
   addressId: string;
@@ -19,32 +20,44 @@ export interface Addresses {
   zipcode: string;
 }
 
+const endpointCache = new NodeCache();
+
 export class ListUserAddressesService {
   public async execute(userId: string): Promise<Addresses[]> {
-    const apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users/${userId}/address`;
+    try {
+      const apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users/${userId}/address`;
 
-    const { data } = await axios.get(apiURL, { timeout: 5000 });
+      if (endpointCache.has(apiURL)) {
+        return endpointCache.get(apiURL) as Addresses[];
+      } else {
+        const { data } = await axios.get(apiURL);
 
-    let addressIdCont = 1;
-    let userAddresses: Addresses[] = [];
+        let addressIdCont = 1;
+        let userAddresses: Addresses[] = [];
 
-    data.map((addresses: Request) => {
-      addresses.addressId = String(addressIdCont);
-      addressIdCont++;
+        data.map((addresses: Request) => {
+          addresses.addressId = String(addressIdCont);
+          addressIdCont++;
 
-      let { addressId, street, number, country, city, state, zipcode } =
-        addresses;
+          let { addressId, street, number, country, city, state, zipcode } =
+            addresses;
 
-      userAddresses.push({
-        addressId,
-        address: street + ', ' + number,
-        country,
-        city,
-        state,
-        zipcode,
-      });
-    });
+          userAddresses.push({
+            addressId,
+            address: street + ', ' + number,
+            country,
+            city,
+            state,
+            zipcode,
+          });
+        });
 
-    return userAddresses;
+        endpointCache.set(apiURL, userAddresses);
+
+        return userAddresses;
+      }
+    } catch (error) {
+      return [];
+    }
   }
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import NodeCache from 'node-cache';
 import { Addresses } from './ListUserAddressesService';
 import { Contacts } from './ListUserContactsService';
 
@@ -26,6 +27,8 @@ interface QueryParams {
   order: 'asc' | 'desc';
 }
 
+const endpointCache = new NodeCache();
+
 export class ListUsersService {
   public async execute(queryParams: QueryParams): Promise<Users[]> {
     let apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users`;
@@ -48,22 +51,28 @@ export class ListUsersService {
       }
     }
 
-    const { data } = await axios.get(apiURL);
-    let usersList: Users[] = [];
+    if (endpointCache.has(apiURL)) {
+      return endpointCache.get(apiURL) as Users[];
+    } else {
+      const { data } = await axios.get(apiURL);
+      let usersList: Users[] = [];
 
-    data.map((addresses: Request) => {
-      let { id, createdAt, firstName, lastName, email } = addresses;
+      data.map((addresses: Request) => {
+        let { id, createdAt, firstName, lastName, email } = addresses;
 
-      usersList.push({
-        id,
-        createdAt,
-        fullName: firstName + ' ' + lastName,
-        email,
-        addresses: [],
-        contacts: [],
+        usersList.push({
+          id,
+          createdAt,
+          fullName: firstName + ' ' + lastName,
+          email,
+          addresses: [],
+          contacts: [],
+        });
       });
-    });
 
-    return usersList;
+      endpointCache.set(apiURL, usersList);
+
+      return usersList;
+    }
   }
 }
