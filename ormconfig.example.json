@@ -1,9 +1,0 @@
-{
-  "name": "mongo",
-  "type": "mongodb",
-  "host": "localhost",
-  "port": 27017,
-  "database": "yourDBName",
-  "useUnifiedTopology": true,
-  "entities": ["schemaFilesPath"]
-}

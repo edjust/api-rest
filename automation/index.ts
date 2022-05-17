@@ -50,6 +50,7 @@ async function index() {
 
       await user.save();
     });
+    console.log('SUCCESS!');
   } catch (error) {
     console.log(error);
   }
