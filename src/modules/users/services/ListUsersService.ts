@@ -1,7 +1,6 @@
 import axios from 'axios';
 import NodeCache from 'node-cache';
-import { Addresses } from './ListUserAddressesService';
-import { Contacts } from './ListUserContactsService';
+import { QueryParams, Users } from '../types';
 
 interface Request {
   id: string;
@@ -9,22 +8,6 @@ interface Request {
   firstName: string;
   lastName: string;
   email: string;
-}
-
-interface Users {
-  id: string;
-  createdAt: string;
-  fullName: string;
-  email: string;
-  contacts: Contacts[];
-  addresses: Addresses[];
-}
-
-interface QueryParams {
-  page: number;
-  limit: number;
-  sortBy: string;
-  order: 'asc' | 'desc';
 }
 
 const endpointCache = new NodeCache();

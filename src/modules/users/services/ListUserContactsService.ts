@@ -1,12 +1,6 @@
 import axios from 'axios';
 import NodeCache from 'node-cache';
-
-export interface Contacts {
-  contactId: string;
-  name: string;
-  phoneNumber: string;
-  email: string;
-}
+import { Contacts } from '../types';
 
 const endpointCache = new NodeCache();
 

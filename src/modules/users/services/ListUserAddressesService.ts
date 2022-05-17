@@ -1,19 +1,11 @@
 import axios from 'axios';
 import NodeCache from 'node-cache';
+import { Addresses } from '../types';
 
 export interface Request {
   addressId: string;
   street: string;
   number: number;
-  country: string;
-  city: string;
-  state: string;
-  zipcode: string;
-}
-
-export interface Addresses {
-  addressId: string;
-  address: string;
   country: string;
   city: string;
   state: string;
