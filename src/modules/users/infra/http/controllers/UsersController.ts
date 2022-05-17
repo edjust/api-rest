@@ -13,11 +13,13 @@ export class ListUsersController {
     const usersList = await listUsersService.execute(queryParams);
 
     for (let user of usersList) {
-      let userAddresses = await listUserAddressesService.execute(user.id);
-      let userContacts = await listUserContactsService.execute(user.id);
+      let userAddresses = listUserAddressesService.execute(user.id);
+      let userContacts = listUserContactsService.execute(user.id);
 
-      user.addresses = userAddresses;
-      user.contacts = userContacts;
+      const result = await Promise.all([userAddresses, userContacts]);
+
+      user.addresses = result[0];
+      user.contacts = result[1];
     }
 
     return response.json(usersList);
