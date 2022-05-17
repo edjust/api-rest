@@ -14,30 +14,21 @@ const endpointCache = new NodeCache();
 
 export class ListUsersService {
   public async execute(queryParams: QueryParams): Promise<Users[]> {
-    let apiURL = `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users`;
-
-    let queryParamsLength = Object.keys(queryParams).length;
+    const apiURL = new URL(
+      `https://${process.env.HOST_PARAM}.mockapi.io/api/v1/users`,
+    );
 
     const { page, limit, sortBy, order } = queryParams;
 
-    if (page || limit || sortBy || order) {
-      apiURL += '?';
+    page ? apiURL.searchParams.append('page', String(page)) : '';
+    limit ? apiURL.searchParams.append('limit', String(limit)) : '';
+    sortBy ? apiURL.searchParams.append('sortBy', sortBy) : '';
+    order ? apiURL.searchParams.append('order', order) : '';
 
-      for (let [key, value] of Object.entries(queryParams)) {
-        apiURL += `${key}=` + value;
-
-        queryParamsLength--;
-
-        if (queryParamsLength == 0) {
-          break;
-        } else apiURL += '&';
-      }
-    }
-
-    if (endpointCache.has(apiURL)) {
-      return endpointCache.get(apiURL) as Users[];
+    if (endpointCache.has(apiURL.href)) {
+      return endpointCache.get(apiURL.href) as Users[];
     } else {
-      const { data } = await axios.get(apiURL);
+      const { data } = await axios.get(apiURL.href);
       let usersList: Users[] = [];
 
       data.map((addresses: Request) => {
@@ -53,7 +44,7 @@ export class ListUsersService {
         });
       });
 
-      endpointCache.set(apiURL, usersList);
+      endpointCache.set(apiURL.href, usersList);
 
       return usersList;
     }
