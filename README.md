@@ -9,15 +9,22 @@
 
 <br>
 
-## 📄 Sobre o projeto 1
+## 👌 Requeridos
 
-<br>
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/) ou [npm](https://www.npmjs.com/)
+
+### Clone o projeto e acesse a pasta
+
+```sh
+$ git clone https://github.com/edjust/desafio-linkapi.git && cd desafio-linkpi
+```
+
+## 📄 Sobre o projeto 1
 
 ### Objetivo
 
 Construção de uma API RESTful usando a tecnologia NodeJS.
-
-<br>
 
 ### Fluxograma
 
@@ -64,17 +71,30 @@ Esta api suporta parâmetros de ordenação que podem ser utilizados através da
 Exemplo de utilização:
 GET /users?sortBy=createdAt&order=desc
 
+### Siga os pasos abaixo
+
+```sh
+# Instalar dependências
+$ yarn
+
+# Faça uma cópia do '.env.example' para '.env'
+# e defina com SUAS variáveis de ambiente.
+$ cp .env.example .env
+
+# Para finalizar, execute o serviço API
+$ yarn dev:server
+```
+
+## 🔨 Teste com Insomnia
+
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=LinkApi&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fedjust%2Fdesafio-linkapi%2Fmaster%2FInsomnia.json%3Ftoken%3DGHSAT0AAAAAABUDRDIV5CT7P34CFRJG43O4YUDGVCA)
 <br>
 
 ## 📄 Sobre o projeto 2
 
-<br>
-
 ### Objetivo
 
 Desenvolvimento de uma automação em NodeJs.
-
-<br>
 
 ### Fluxograma
 
@@ -95,33 +115,15 @@ Desenvolvimento de uma automação em NodeJs.
 
 5. Criar banco de dados Mongo, feito isso deverá ser criada uma collection chamada "users" para inclusão dos usuários. Portanto para cada conversão realizar a inserção dos dados do usuário na collection “users”.
 
-<br>
-
-## 👌 Requeridos
-
-- [Node.js](https://nodejs.org/en/)
-- [Yarn](https://classic.yarnpkg.com/) ou [npm](https://www.npmjs.com/)
-
-### Clone o projeto e acesse a pasta
-
-```sh
-$ git clone https://github.com/edjust/desafio-linkapi.git && cd desafio-linkpi
-```
-
 ### Siga os pasos abaixo
 
 ```sh
-# Instalar dependências
-$ yarn
+# Crie uma instância do mongoDB usando o docker
+$ docker run --name mongodb -p 27017:27017 -d -t mongo
 
-# Faça uma cópia do '.env.example' para '.env'
-# e defina com SUAS variáveis de ambiente.
-$ cp .env.example .env
+# Crie o arquivo ormconfig.json e preencha-o
+# com as configurações do banco  
 
-# Para finalizar, execute o serviço API
-$ yarn dev:server
+# Para finalizar, execute o script de automação
+$ yarn automation
 ```
-
-<br>
-
-## 🔨 Teste com Insomnia
