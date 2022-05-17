@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import axios from 'axios';
 import { Schema, model, connect } from 'mongoose';
 
@@ -33,7 +34,7 @@ async function index() {
 
     let { data } = await axios.get(api);
 
-    await connect('mongodb://localhost:27017/linkapi');
+    await connect(`mongodb://localhost:27017/${process.env.DB_NAME}`);
 
     data.map(async (users: Request) => {
       let { fullName, email, addresses, contacts } = users;
