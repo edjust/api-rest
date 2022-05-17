@@ -9,10 +9,10 @@ export class Users {
   email: string;
 
   @Column()
-  address: string;
+  address: string | '';
 
   @Column()
-  addressNumber: number;
+  addressNumber: number | '';
 
   @Column()
   phoneNumber: string;

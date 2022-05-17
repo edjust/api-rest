@@ -17,7 +17,13 @@ export class UsersRepository implements IUsersRepository {
     addressNumber,
     phoneNumber,
   }: IInsertUsersDTO): Promise<Users> {
-    const user = this.ormRepository.create({});
+    const user = this.ormRepository.create({
+      fullName,
+      email,
+      address,
+      addressNumber,
+      phoneNumber,
+    });
 
     await this.ormRepository.save(user);
 

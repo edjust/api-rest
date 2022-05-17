@@ -7,14 +7,14 @@ import { UsersRepository } from './modules/users/infra/typeorm/repositories/User
 interface Request {
   fullName: string;
   email: string;
-  addresses: [{ address: string }];
+  addresses: [{ address: string; addressNumber: number }];
   contacts: [{ phoneNumber: string }];
 }
 
 const api = 'http://localhost:4000/users';
 
 async function index() {
-  const { data } = await axios.get(api);
+  let { data } = await axios.get(api);
 
   const usersRepository: IUsersRepository = new UsersRepository();
 
@@ -24,8 +24,10 @@ async function index() {
     await usersRepository.insert({
       fullName,
       email,
-      address: addresses[0].address.split(',')[0],
-      addressNumber: Number(addresses[0].address.split(',')[1]),
+      address: addresses[0] ? addresses[0].address.split(',')[0] : '',
+      addressNumber: addresses[0]
+        ? Number(addresses[0].address.split(',')[1])
+        : '',
       phoneNumber: contacts[0].phoneNumber,
     });
   });
