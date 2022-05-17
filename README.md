@@ -122,10 +122,6 @@ Desenvolvimento de uma automação em NodeJs.
 # Crie uma instância do mongoDB usando o docker
 $ docker run --name mongodb -p 27017:27017 -d -t mongo
 
-# Faça uma cópia do 'ormconfig.example.json' para 'ormconfig.json'
-# e defina com SUAS variáveis de ambiente.
-$ cp ormconfig.example.json ormconfig.json 
-
 # Para finalizar, execute o script de automação
 $ yarn automation
 ```
