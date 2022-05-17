@@ -87,7 +87,8 @@ $ yarn dev:server
 
 ## 🔨 Teste com Insomnia
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=LinkApi&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fedjust%2Fdesafio-linkapi%2Fmaster%2FInsomnia.json%3Ftoken%3DGHSAT0AAAAAABUDRDIV5CT7P34CFRJG43O4YUDGVCA)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Teste%20LinkApi&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fedjust%2Fdesafio-linkapi%2Fmaster%2FInsomnia.json%3Ftoken%3DGHSAT0AAAAAABUTSYEIUJMPMJLA5RUHX3MIYUDPCFA)
+
 <br>
 
 ## 📄 Sobre o projeto 2
