@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 import axios from 'axios';
-import './database';
-import { IUsersRepository } from './modules/users/repositories/IUsersRepository';
-import { UsersRepository } from './modules/users/infra/typeorm/repositories/UsersRepository';
+import { Schema, model, connect } from 'mongoose';
 
 interface Request {
   fullName: string;
@@ -11,26 +9,50 @@ interface Request {
   contacts: [{ phoneNumber: string }];
 }
 
-const api = 'http://localhost:4000/users';
+interface Users {
+  fullName: string;
+  email: string;
+  address: string;
+  addressNumber: number | '';
+  phoneNumber: string;
+}
+
+const usersSchema = new Schema<Users>({
+  fullName: String,
+  email: String,
+  address: String,
+  addressNumber: Number,
+  phoneNumber: String,
+});
+
+const Users = model<Users>('Users', usersSchema);
 
 async function index() {
-  let { data } = await axios.get(api);
+  try {
+    const api = 'http://localhost:4000/users';
 
-  const usersRepository: IUsersRepository = new UsersRepository();
+    let { data } = await axios.get(api);
 
-  data.map(async (users: Request) => {
-    let { fullName, email, addresses, contacts } = users;
+    await connect('mongodb://localhost:27017/linkapi');
 
-    await usersRepository.insert({
-      fullName,
-      email,
-      address: addresses[0] ? addresses[0].address.split(',')[0] : '',
-      addressNumber: addresses[0]
-        ? Number(addresses[0].address.split(',')[1])
-        : '',
-      phoneNumber: contacts[0].phoneNumber,
+    data.map(async (users: Request) => {
+      let { fullName, email, addresses, contacts } = users;
+
+      let user = new Users({
+        fullName,
+        email,
+        address: addresses[0] ? addresses[0].address.split(',')[0] : '',
+        addressNumber: addresses[0]
+          ? Number(addresses[0].address.split(',')[1])
+          : '',
+        phoneNumber: contacts[0] ? contacts[0].phoneNumber : '',
+      });
+
+      await user.save();
     });
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 index();
