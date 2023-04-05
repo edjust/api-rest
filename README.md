@@ -1,14 +1,3 @@
-<h1 align="center">
-  <img alt="Logo" src="./assets/logo.png" width="200px">
-</h1>
-
-<h3 align="center">
-  Desafio Técnico LinkApi - Junior
-
-</h3>
-
-<br>
-
 ## 👌 Requeridos
 
 - [Node.js](https://nodejs.org/en/)
