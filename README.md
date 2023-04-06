@@ -30,7 +30,6 @@ Construção de uma API RESTful usando a tecnologia NodeJS.
 5. Para cada usuário retornado, deverá ser feita uma chamada na seguinte rota para resgatar os contatos: "/users/{userId}/contact".
 6. As informações de contato e endereço deverão ser agrupadas junto ao seu respectivo usuário.
 7. Sua API por fim deverá retornar ao requisitante os usuários com as respectivas informações (informações base do usuário retornadas na listagem de usuários + lista de endereços + lista de contatos).
-   2/6
 8. O endpoint deverá retornar uma lista com o seguinte payload para cada usuário:
 
 <h1 align="center">
