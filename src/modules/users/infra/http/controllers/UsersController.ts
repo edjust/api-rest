@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { ListUsersService } from '../../../services/ListUsersService';
-import { ListUserAddressesService } from '../../../services/ListUserAddressesService';
-import { ListUserContactsService } from '../../../services/ListUserContactsService';
+import { ListUsersService } from '@modules/users/services/ListUsersService';
+import { ListUserAddressesService } from '@modules/users/services/ListUserAddressesService';
+import { ListUserContactsService } from '@modules/users/services/ListUserContactsService';
 
 export class ListUsersController {
   public async index(request: Request, response: Response) {
